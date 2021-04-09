@@ -1,0 +1,124 @@
+<body>
+    <!--<div class="container">
+        <div class="row">
+          <div class="col-md-3 col-10 col-lg-4 col-sm-10">
+            One of three columns
+          </div>
+          <div class="col-md-3 col-3 col-lg-4 col-sm-10">
+            One of three columns
+          </div>
+          <div class="col-md-3 col-3 col-lg-4 col-sm-10">
+            One of three columns
+          </div>
+        </div>
+      </div>-->
+      <!--<div >
+          <div class="row">
+            <div class="col-1 col-sm-1 col-lg-1 col-md-1"></div>
+              <div class="col-lg-3 col-md-3 col-sm-10 col-10 "  >
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+              </div>
+              <div class="col-1 col-sm-1 col-lg-1 col-md-1"></div>
+              <div class="col-lg-7 col-md-7 col-sm-10 col-10" >
+                <div class="row">
+                   
+                    <div class="col-lg-5 col-md-5 col-sm-10 col-10 ">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="../../assets/spinach.jfif" alt="Card image cap" height="200px">
+                            <div class="card-body">
+                              <h5 class="card-title">Spinach</h5>
+                              <p class="card-text">$2.50</p>
+                              <button href="#" class="btn " style="width: 100%;background-color: grey;color: white;font-weight: 600;">ADD TO CART</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-5 col-md-5 col-sm-10 col-10  ">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="../../assets/bread.jfif" alt="Card image cap" height="200px">
+                            <div class="card-body">
+                              <h5 class="card-title">Freshly Baked Bread</h5>
+                              <p class="card-text">$10.0</p>
+                              <button href="#" class="btn " style="width: 100%;background-color: grey;color: white;font-weight: 600;">ADD TO CART</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>-->
+      <div class="row" >
+       
+          <div class="col-3" style="margin-left: 3%;margin-top: 2%;">
+              
+                <ul class="list-group" >
+                  <li class="list-group-item active" style="background-color: #049600;" *ngIf="allcat"><button class="btn" style="color: white;" (click)="getallProducts()">All Categories</button></li>
+                  <li class="list-group-item " *ngIf="!allcat"><button class="btn"  (click)="getallProducts()">All Categories</button></li>
+                  </ul>
+                  <ul class="list-group" *ngFor="let id of categories">
+                    <!--<li class="list-group-item " >
+                      <button *ngIf="allcat" class="btn" (click)="getcategorywiseproduct(id.categoryId)"><span class="categoryname">{{id.categoryName}}</span></button>
+                      <button *ngIf="!allcat && (id.categoryId == catid)" class="btn" (click)="getcategorywiseproduct(id.categoryId)" style="color: white;background-color:#049600 ;"><span class="categoryname">{{id.categoryName}}</span></button>
+                      <button *ngIf="!allcat && !(id.categoryId == catid)" class="btn" (click)="getcategorywiseproduct(id.categoryId)" ><span class="categoryname">{{id.categoryName}}</span></button>
+                    </li>-->
+                    <li class="list-group-item" *ngIf="allcat">
+                      <button  class="btn" (click)="getcategorywiseproduct(id.categoryId)"><span class="categoryname">{{id.categoryName}}</span></button>
+                    </li>
+                    <li class="list-group-item active" *ngIf="!allcat && (id.categoryId == catid)" style="background-color: #049600;">
+                      <button  class="btn" (click)="getcategorywiseproduct(id.categoryId)" style="color: white;"><span class="categoryname">{{id.categoryName}}</span></button>
+                    </li>
+                    <li class="list-group-item" *ngIf="!allcat && !(id.categoryId == catid)">
+                      <button  class="btn" (click)="getcategorywiseproduct(id.categoryId)"><span class="categoryname">{{id.categoryName}}</span></button>
+                    </li>
+
+                    
+                    
+                  </ul>
+              
+          </div>
+          <div class="col">
+              <div class="row">
+                  <ng-container *ngFor="let id of products;let i =index">
+                  <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../../assets/bread.jfif" alt="Card image cap" height="200px">
+                        <div class="card-body">
+                          <h5 class="card-title">{{id.productName}}</h5>
+                          <p class="card-text">{{id.price | currency:'&#8377;':true}}</p>
+                          <button *ngIf="!addedtocart" class="btn " style="width: 100%;background-color: #049600;color: white;font-weight: 600;" (click)="addToCart(id.productId,id.productName,id.price)">ADD TO CART</button>
+                          <!--<button *ngIf="addedtocart && (id.productId == cartaddedproductid)" class="btn " style="width: 100%;background-color: #049600;color: white;font-weight: 600;" (click)="addToCart(id.productId,id.productName,id.price)">ADDED</button>-->
+                          
+
+                          <div class="input-group" *ngIf="addedtocart && (id.productId == cartaddedproductid)">
+                            <span class="input-group-btn">
+                          <button type="button" class="btn btn-default btn-number"  data-type="minus" data-field="quant[1]" style="background-color: #049600;color: white;"(click)="decrementQuantity(id.productId,id.productName,id.price)">
+                            <i class="fa fa-minus"></i>
+                            </button>
+                            </span>
+                            <input type="text" name="quant[1]" class="form-control input-number" value={{quantitydisp}} min="1"readonly="readonly" style="text-align: center;">
+                            <span class="input-group-btn">
+                          <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]" style="background-color: #049600;color: white;"(click)="incrementQuantity(id.productId,id.productName,id.price)">
+                            <i class="fa fa-plus"></i>
+                            </button>
+                            </span>
+                        </div>
+
+
+                          <button *ngIf="addedtocart && !(id.productId == cartaddedproductid)" class="btn " style="width: 100%;background-color: #049600;color: white;font-weight: 600;" (click)="addToCart(id.productId,id.productName,id.price)">ADD TO CART</button>
+                        </div>
+                    </div>
+                  </div>
+                  <div *ngIf="(i+1)%3==0" class="w-100"></div>
+                </ng-container>
+              </div>
+          </div>
+      </div>
+</body>
+
