@@ -1,1 +1,52 @@
-<p>cart works!</p>
+<body>
+
+
+    <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col" class="imgnone"></th>
+            <th scope="col" class="product">Product</th>
+            <th scope="col" class="quantity">Quantity</th>
+            <th scope="col" class="price">Price</th>
+          </tr>
+        </thead>
+        
+      </table>
+
+
+
+
+
+    <div class="row" *ngFor="let id of cartitems">
+        <div class="col-1"></div>
+        <div class="col-3">
+            <img class="cart_img" src="../../assets/bread.jfif">
+        </div>
+        <div class="col-2 cart_details" style="font-weight: 600;">
+            {{id.product_name}}
+        </div>
+        <div class="col-3 cart_details">
+            
+            <div class="input-group" >
+                <span class="input-group-btn">
+              <button type="button" class="btn btn-default btn-number"  data-type="minus" data-field="quant[1]" style="background-color: #049600;color: white;">
+                <i class="fa fa-minus"></i>
+                <i class="fa fa-trash" *ngIf="deletebtnquantity==1"></i>
+                </button>
+                </span>
+                <input type="text" name="quant[1]" class="form-control input-number" value="{{id.quantity}}  in cart" min="1"readonly="readonly" style="text-align: center;">
+                <span class="input-group-btn">
+              <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]" style="background-color: #049600;color: white;">
+                <i class="fa fa-plus"></i>
+                </button>
+                </span>
+            </div>
+
+        </div>
+        <div class="col-3 cart_details" style="text-align: center;font-weight: 600;">
+            {{id.total_amount | currency:'&#8377;':true}}
+        </div>
+        
+    </div>
+    
+</body>

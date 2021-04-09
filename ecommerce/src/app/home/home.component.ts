@@ -18,6 +18,11 @@ export class HomeComponent implements OnInit {
   quantity:number=1;
   quantitydisp:any;
   currentcartid:any;
+  showcounter:boolean=false;
+  userid=3;
+  cartitems:any;
+  deletebtnquantity: any;
+  
   constructor(
     private apiService : ApiserviceService
   ) { }
@@ -25,7 +30,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getallCategories();
     this.getallProducts();
+    this.getallcartitems();
     this.quantitydisp=this.quantity+" in cart";
+   
   }
 
   getallCategories(){
@@ -76,24 +83,46 @@ export class HomeComponent implements OnInit {
       console.log("add to cart result ",result);
       this.currentcartid = result['cart_id'];
       if(result!=null){
-        this.addedtocart = true;
+       /* this.ids.push(productId);
+        console.log("ids array is",this.ids);*/
+        this.getallcartitems();
+        this.demofunc(productId);
       }
     })
 
   }
 
   incrementQuantity(productId:any,productName:any,productPrice:any){
+    this.getallcartitems();
+    
+    //this.quantitydisp=this.quantity+" in cart";
+    
+    for(var i=0;i<this.cartitems.length;i++){
+      if(productId == this.cartitems[i]['product_id']){
+        this.quantity=this.cartitems[i]['quantity'];
+        this.currentcartid = this.cartitems[i]['cart_id'];
+      }
+    }
     this.quantity=this.quantity+1;
-    this.quantitydisp=this.quantity+" in cart";
+    console.log("cartid is",this.currentcartid);
     this.updateCart(this.currentcartid,productId,productName,this.quantity,productPrice);
 
   }
   decrementQuantity(productId:any,productName:any,productPrice:any){
+    this.getallcartitems();
+    for(var i=0;i<this.cartitems.length;i++){
+      if(productId == this.cartitems[i]['product_id']){
+        this.quantity=this.cartitems[i]['quantity'];
+        this.currentcartid = this.cartitems[i]['cart_id'];
+      }
+    }
     if((this.quantity-1)==0){
       this.addedtocart = false;
       const res = this.apiService.deleteData('deletecartitem/'+this.currentcartid);
       res.subscribe(result=>{
         console.log("in cart delete",result);
+        this.getallcartitems();
+        this.demofunc(productId);
       })
     }else if((this.quantity-1<0)){
       console.log("not allowed");
@@ -105,7 +134,7 @@ export class HomeComponent implements OnInit {
     
   }
   updateCart(cartId:any,productId:any,productName:any,productQuantity:any,productPrice:any){
-
+    console.log("cartId is",cartId);
     const data = {
       cart_id:cartId,
       user_id: 3,
@@ -119,10 +148,47 @@ export class HomeComponent implements OnInit {
   const res = this.apiService.putData('updatecart',JSON.stringify(data));
   res.subscribe(result=>{
     console.log("update cart",result);
+    this.getallcartitems();
+    for(var i=0;i<this.cartitems.length;i++){
+      if(productId==this.cartitems[i]['product_id']){
+        this.quantitydisp = this.cartitems[i]['quantity']+" in cart";
+      }
+    }
   })
   
 
   }
+  
+  demofunc(id:any){
+    var count=0;
+    
+   
+    for(var i=0;i<this.cartitems.length;i++){
+     
+      if(id==this.cartitems[i]['product_id']){
+        this.deletebtnquantity = this.cartitems[i]['quantity'];
+        this.quantitydisp = this.cartitems[i]['quantity']+" in cart";
+        this.showcounter=true;
+        break;
+      }else{
+        count+=1;
+      }
+    }
+    if(count==this.cartitems.length){
+      this.showcounter=false;
+    }
+   
+  }
+
+  getallcartitems(){
+    const res = this.apiService.getData('getcartitems/'+this.userid);
+    res.subscribe(results=>{
+      console.log("cart items are ",results);
+      this.cartitems=results;
+    })
+  }
+
+  
 
 }
 /*

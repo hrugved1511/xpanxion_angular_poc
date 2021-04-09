@@ -85,21 +85,22 @@
           </div>
           <div class="col">
               <div class="row">
-                  <ng-container *ngFor="let id of products;let i =index">
+                  <ng-container *ngFor="let id of products;let i=index" >
+                    {{demofunc(id.productId)}}
                   <div class="col">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="../../assets/bread.jfif" alt="Card image cap" height="200px">
                         <div class="card-body">
                           <h5 class="card-title">{{id.productName}}</h5>
                           <p class="card-text">{{id.price | currency:'&#8377;':true}}</p>
-                          <button *ngIf="!addedtocart" class="btn " style="width: 100%;background-color: #049600;color: white;font-weight: 600;" (click)="addToCart(id.productId,id.productName,id.price)">ADD TO CART</button>
-                          <!--<button *ngIf="addedtocart && (id.productId == cartaddedproductid)" class="btn " style="width: 100%;background-color: #049600;color: white;font-weight: 600;" (click)="addToCart(id.productId,id.productName,id.price)">ADDED</button>-->
-                          
+                          <button *ngIf="!showcounter" class="btn " style="width: 100%;background-color: #049600;color: white;font-weight: 600;" (click)="addToCart(id.productId,id.productName,id.price)">ADD TO CART</button>
+                         
 
-                          <div class="input-group" *ngIf="addedtocart && (id.productId == cartaddedproductid)">
+                          <div class="input-group" *ngIf="showcounter">
                             <span class="input-group-btn">
                           <button type="button" class="btn btn-default btn-number"  data-type="minus" data-field="quant[1]" style="background-color: #049600;color: white;"(click)="decrementQuantity(id.productId,id.productName,id.price)">
-                            <i class="fa fa-minus"></i>
+                            <i class="fa fa-minus" *ngIf="deletebtnquantity!=1"></i>
+                            <i class="fa fa-trash" *ngIf="deletebtnquantity==1"></i>
                             </button>
                             </span>
                             <input type="text" name="quant[1]" class="form-control input-number" value={{quantitydisp}} min="1"readonly="readonly" style="text-align: center;">
@@ -116,6 +117,7 @@
                     </div>
                   </div>
                   <div *ngIf="(i+1)%3==0" class="w-100"></div>
+                
                 </ng-container>
               </div>
           </div>
