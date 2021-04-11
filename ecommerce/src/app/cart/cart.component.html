@@ -1,5 +1,18 @@
 <body>
 
+    <div class="row topline">
+        <div class="col-1"></div>
+        <div class="col-5">
+            <span>You have {{itemscount}} items in your shopping cart.</span>
+        </div>
+        <div class="col-4">
+
+        </div>
+        <div class="col-2">
+            <span style="color: red;cursor:pointer" (click)="clearcart()">Clear Shopping Cart</span>
+        </div>
+    </div>
+
 
     <table class="table table-borderless">
         <thead>
@@ -14,7 +27,7 @@
       </table>
 
 
-
+<hr>
 
 
     <div class="row" *ngFor="let id of cartitems">
@@ -29,14 +42,14 @@
             
             <div class="input-group" >
                 <span class="input-group-btn">
-              <button type="button" class="btn btn-default btn-number"  data-type="minus" data-field="quant[1]" style="background-color: #049600;color: white;">
+              <button type="button" class="btn btn-default btn-number"  data-type="minus" data-field="quant[1]" style="background-color: #049600;color: white;" (click)="updatecart(id.cart_id,id.product_id,id.product_name,id.product_price,id.quantity-1)">
                 <i class="fa fa-minus"></i>
-                <i class="fa fa-trash" *ngIf="deletebtnquantity==1"></i>
+                <!--<i class="fa fa-trash" *ngIf="deletebtnquantity==1"></i>-->
                 </button>
                 </span>
                 <input type="text" name="quant[1]" class="form-control input-number" value="{{id.quantity}}  in cart" min="1"readonly="readonly" style="text-align: center;">
                 <span class="input-group-btn">
-              <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]" style="background-color: #049600;color: white;">
+              <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]" style="background-color: #049600;color: white;" (click)="updatecart(id.cart_id,id.product_id,id.product_name,id.product_price,id.quantity+1)">
                 <i class="fa fa-plus"></i>
                 </button>
                 </span>
@@ -46,7 +59,23 @@
         <div class="col-3 cart_details" style="text-align: center;font-weight: 600;">
             {{id.total_amount | currency:'&#8377;':true}}
         </div>
-        
+       
     </div>
+    <hr>
+    <div class="row">
+        <div class="col-1">
+            
+        </div>
+        <div class="col-3">
+            <button class="btn" routerLink="/checkout">Checkout</button>
+        </div>
+        <div class="col-6"></div>
+        <div class="col-2">
+            <div class="totalamount">
+                {{totalcartamount | currency:'&#8377;':true}}
+            </div>
+        </div>
+    </div>
+    
     
 </body>

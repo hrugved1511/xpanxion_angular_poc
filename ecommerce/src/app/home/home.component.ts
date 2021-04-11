@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
 import { ApiserviceService } from '../services/apiservice.service';
 
 @Component({
@@ -22,17 +24,22 @@ export class HomeComponent implements OnInit {
   userid=3;
   cartitems:any;
   deletebtnquantity: any;
-  
+  navbar = new NavbarComponent(this.apiService);
+
   constructor(
-    private apiService : ApiserviceService
+    private apiService : ApiserviceService,
+    private router : Router
   ) { }
 
   ngOnInit(): void {
     this.getallCategories();
     this.getallProducts();
     this.getallcartitems();
-    this.quantitydisp=this.quantity+" in cart";
    
+    this.quantitydisp=this.quantity+" in cart";
+    
+    
+    
   }
 
   getallCategories(){
@@ -87,6 +94,7 @@ export class HomeComponent implements OnInit {
         console.log("ids array is",this.ids);*/
         this.getallcartitems();
         this.demofunc(productId);
+        
       }
     })
 

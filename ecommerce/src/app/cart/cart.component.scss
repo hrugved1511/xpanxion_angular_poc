@@ -1,3 +1,8 @@
+.topline{
+    margin-bottom: 5%;
+    font-size: large;
+    font-weight: 600;
+}
 .input-group{
     width: 70%;
 
@@ -7,6 +12,7 @@
     width: 150px;
     border-radius: 50%;
     margin-top: 3%;
+  
 }
 .cart_details{
     margin-top: 5%;
@@ -25,4 +31,15 @@ th{
 }
 .price{
     width: 10%;
+}
+.totalamount{
+   
+    font-weight: bold;
+    font-size: large;
+}
+.btn{
+    background-color: #049600;
+    color: white;
+    font-size: large;
+    font-weight: bold;
 }

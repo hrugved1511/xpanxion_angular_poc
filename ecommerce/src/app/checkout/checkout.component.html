@@ -1,1 +1,55 @@
-<p>checkout works!</p>
+<body>
+    <div class="heading">
+        <span>Shipping</span>
+    </div>
+
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-3">
+            <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Name</label>
+                  <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name">
+                 
+                </div><br>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Address</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Line 1"><br>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Line 2">
+                </div><br>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">City</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter City">
+                   
+                  </div><br>
+                
+              </form>
+              <button (click)="placeorder()" class="btn " style="background-color: #049600;color: white;font-size: large;font-weight: 600;">Place Order</button>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <div class="card" style="width: 24rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Order Summary</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">You have {{itemcount}} items in your shopping cart.</h6><hr>
+                  <p class="card-text" *ngFor="let id of cartitems">
+                      <span class="name">
+                        {{id.quantity}} x {{id.product_name}}
+                      </span>
+                    <span class="amount">
+                        {{id.total_amount | currency:'&#8377;':true}}
+                    </span>
+                    
+                  </p>
+                  <div class="card-footer">
+                      <span class="totalname">Total</span>
+                      <span class="totalamount">{{totalcartamount | currency:'&#8377;':true}}</span>
+                  </div>
+                  <!--<a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>-->
+                </div>
+              </div>
+        </div>
+       
+    </div>
+</body>
