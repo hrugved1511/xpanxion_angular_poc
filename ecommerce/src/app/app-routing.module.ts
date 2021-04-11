@@ -9,7 +9,7 @@ const routes: Routes = [
   {path:'home',component:HomeComponent},
   {path:'cart',component:CartComponent},
   {path:'checkout',component:CheckoutComponent},
-  {path:'orderplaced',component:OrderplacedComponent},
+  {path:'orderplaced/:id',component:OrderplacedComponent},
   {path:'',redirectTo:'/home',pathMatch:'full'}
 ];
 

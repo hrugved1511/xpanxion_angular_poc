@@ -13,6 +13,10 @@ export class CheckoutComponent implements OnInit {
   userid:any=3;
   cartitems:any;
   totalcartamount:number=0;
+  productnames:any;
+  quantity:any;
+  productprices:any;
+  orderid:any;
   constructor(
     private apiService : ApiserviceService,
     private router : Router
@@ -37,8 +41,62 @@ export class CheckoutComponent implements OnInit {
     })
   }
   placeorder(){
-    console.log("order placed");
-    this.router.navigateByUrl('orderplaced')
+    this.getallcartitems();
+    this.productprices=this.cartitems[0]['product_price'];
+    this.productnames=this.cartitems[0]['product_name'];
+    this.quantity=this.cartitems[0]['quantity'];
+    for(var i=1;i<this.cartitems.length;i++){
+      this.productnames = this.productnames+","+this.cartitems[i]['product_name'];
+      this.quantity = this.quantity+","+this.cartitems[i]['quantity'];
+      this.productprices = this.productprices+","+this.cartitems[i]['product_price'];
+    }
+    const data = {
+        user_id: 3,
+        address_id: 1,
+        order_placed_on: "2021-03-27T18:30:00.000+00:00",
+        shipped_onDate: "2021-04-04T18:30:00.000+00:00",
+        order_stage: "not shipped",
+        total_amount:this.totalcartamount,
+        is_delivered: "no",
+        product_name: this.productnames,
+        quantity: this.quantity,
+        payment_mode: "cod",
+        payment_status: 0,
+        discount_id: 0,
+        product_price:this.productprices
+    }
+    console.log(JSON.stringify(data));
+    const res = this.apiService.postData('placeorder',JSON.stringify(data));
+    res.subscribe(result=>{
+      console.log("order placed with order number ",result);
+      this.orderid=result['order_id'];
+      console.log("order id is",this.orderid)
+      this.router.navigate(['/orderplaced',this.orderid])
+    });
+    
+    
+    
   }
 
 }
+
+/*
+
+ {
+        
+        "user_id": 1,
+        "address_id": 1,
+        "order_placed_on": "2021-03-27T18:30:00.000+00:00",
+        "shipped_onDate": "2021-04-04T18:30:00.000+00:00",
+        "order_stage": "shipped",
+        "total_amount":500,
+        "is_delivered": "no",
+        "product_name": "milkbread,spinach,curd",
+        "quantity": "5,3,4",
+        "payment_mode": "cod",
+        "payment_status": 0,
+        "discount_id": 0,
+        "product_price": "10,20,50"
+    }
+
+*/

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-orderplaced',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderplacedComponent implements OnInit {
 
-  constructor() { }
+  orderid:any;
+
+  constructor(
+    private activatedRoute : ActivatedRoute
+  ) {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.orderid = params.get('id');
+      
+      console.log(" id is" + this.orderid);
+    });
+
+   }
 
   ngOnInit(): void {
+    console.log(localStorage.getItem('orderid'))
   }
 
 }
