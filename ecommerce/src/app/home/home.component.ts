@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getallCategories();
     this.getallProducts();
-    this.getallcartitems();
+    //this.getallcartitems();
    
     this.quantitydisp=this.quantity+" in cart";
     
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
     this.catid =id;
     console.log('in getcategorywiseproduct with id ',id);
 
-    const res = this.apiService.getData('/getproduct/category/'+id);
+    const res = this.apiService.getData('getproduct/category/'+id);
     res.subscribe(result=>{
       console.log('products for category id ',id,'are ',result);
       this.products = result;
